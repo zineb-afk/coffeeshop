@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useEffect } from 'react';
 
 const AdminLayout = () => {
   const { user, logout } = useAuth();
@@ -11,7 +10,7 @@ const AdminLayout = () => {
   useEffect(() => {
     if (!user) { navigate('/espace-client'); return; }
     if (user.role !== 'admin') { navigate('/'); }
-  }, [user]);
+  }, [user, navigate]); // ✅ navigate ajouté
 
   const handleLogout = () => { logout(); navigate('/'); };
 
@@ -30,7 +29,6 @@ const AdminLayout = () => {
 
   return (
     <div style={styles.layout}>
-      {/* Sidebar */}
       <aside style={styles.sidebar}>
         <Link to="/" style={styles.logo}>☕ Coffee Arts</Link>
         <div style={styles.adminLabel}>Administration</div>
@@ -50,8 +48,6 @@ const AdminLayout = () => {
           <button onClick={handleLogout} style={styles.logoutBtn}>Déconnexion</button>
         </div>
       </aside>
-
-      {/* Main */}
       <main style={styles.main}>
         <Outlet />
       </main>
