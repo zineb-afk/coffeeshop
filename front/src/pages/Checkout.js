@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const Checkout = () => {
   const { cartItems, cartTotal, clearCart } = useCart();
-  const { user } = useAuth();
+  const { } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [adresse, setAdresse] = useState({
