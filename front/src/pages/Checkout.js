@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 
 const Checkout = () => {
   const { cartItems, cartTotal, clearCart } = useCart();
-  const { } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [adresse, setAdresse] = useState({
