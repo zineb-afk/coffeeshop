@@ -8,7 +8,7 @@ const Ateliers = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/ateliers')
+    api.get('/api/ateliers')
       .then(({ data }) => setAteliers(data))
       .catch(() => toast.error('Erreur chargement ateliers'))
       .finally(() => setLoading(false));

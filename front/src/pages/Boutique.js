@@ -13,19 +13,19 @@ const Boutique = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const params = categorie !== 'Tous' ? { categorie } : {};
-        const { data } = await api.get('/products', { params });
-        setProducts(data);
-      } catch (err) {
-        toast.error('Erreur lors du chargement des produits');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, [categorie]);
+  const fetchProducts = async () => {
+    try {
+      const params = categorie !== 'Tous' ? { categorie } : {};
+      const { data } = await api.get('/api/products', { params });
+      setProducts(data);
+    } catch (err) {
+      toast.error('Erreur lors du chargement des produits');
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchProducts();
+}, [categorie]);
 
   const handleAddToCart = (product) => {
     addToCart(product);

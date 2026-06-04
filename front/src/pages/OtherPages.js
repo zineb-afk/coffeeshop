@@ -1,6 +1,6 @@
 // ============== BLOG ==============
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 
@@ -9,7 +9,10 @@ export const Blog = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/blog').then(({ data }) => setArticles(data)).catch(() => toast.error('Erreur chargement blog')).finally(() => setLoading(false));
+    api.get('/api/blog')
+      .then(({ data }) => setArticles(data))
+      .catch(() => toast.error('Erreur chargement blog'))
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -44,12 +47,15 @@ export const Blog = () => {
 };
 
 export const BlogDetail = () => {
-  const { slug } = require('react-router-dom').useParams();
+  const { slug } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get(`/blog/${slug}`).then(({ data }) => setArticle(data)).catch(() => {}).finally(() => setLoading(false));
+    api.get(`/api/blog/${slug}`)
+      .then(({ data }) => setArticle(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [slug]);
 
   if (loading) return <div className="spinner" style={{ marginTop: 80 }} />;

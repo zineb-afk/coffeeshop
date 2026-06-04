@@ -4,16 +4,15 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 
-// Génère un token JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
 
-// POST /api/auth/register — Inscription
 router.post('/register', async (req, res) => {
   try {
+    console.log('BODY REÇU:', req.body);
     const { nom, prenom, email, password, telephone } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -32,11 +31,11 @@ router.post('/register', async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (err) {
+    console.log('ERREUR REGISTER:', err.message);
     res.status(500).json({ message: err.message });
   }
 });
 
-// POST /api/auth/login — Connexion
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -59,12 +58,10 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// GET /api/auth/me — Profil connecté
 router.get('/me', protect, async (req, res) => {
   res.json(req.user);
 });
 
-// PUT /api/auth/profile — Modifier profil
 router.put('/profile', protect, async (req, res) => {
   try {
     const { nom, prenom, telephone, password } = req.body;
